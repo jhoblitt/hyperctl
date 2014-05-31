@@ -1,4 +1,7 @@
 require 'spec_helper'
+# pp must be required before fakefs
+# see: https://github.com/defunkt/fakefs/issues/99
+require 'pp'
 require 'fakefs'
 
 def sysfs(cpu_name, attr)
