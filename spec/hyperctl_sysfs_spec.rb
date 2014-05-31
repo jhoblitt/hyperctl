@@ -67,5 +67,22 @@ describe Hyperctl::Sysfs do
     expect(hctl.cpu_info).to eq(info)
   end
 
+
+  it do
+    hctl = Hyperctl::Sysfs.new
+    hctl.disable_core(15)
+    hctl.refresh
+
+    expect(sysfs('cpu15', 'online')).to contain(/^0$/)
+  end
+
+  it do
+    hctl = Hyperctl::Sysfs.new
+    hctl.enable_core(15)
+    hctl.refresh
+
+    expect(sysfs('cpu15', 'online')).to contain(/^1$/)
+  end
+
 end
 

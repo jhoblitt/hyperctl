@@ -64,10 +64,26 @@ class Hyperctl::Sysfs
     @cpu_info = info
   end
 
+  def enable_core(core_id)
+    set_core(core_id, '1')
+  end
+
+  def disable_core(core_id)
+    set_core(core_id, '0')
+  end
+
   private
 
   def to_bool(s)
     return true if s =~ /^1$/
     return false
+  end
+
+  def set_core(core_id, state)
+    path = File.join('/sys/devices/system/cpu', "cpu#{core_id.to_s}", 'online')
+    # doesn't work in ruby 1.8.7: File.write(path, '0')
+    File.open(path, 'w') do |f|
+      f.write(state)
+    end
   end
 end # class Hyperctl::Sysfs
