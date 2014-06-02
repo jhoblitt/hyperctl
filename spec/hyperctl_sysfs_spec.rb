@@ -6,8 +6,8 @@ require 'fakefs'
 
 describe Hyperctl::Sysfs do
   context 'on a 8 physical core w/ HT enabled system' do
-    include_context "sysfs_16core_w_ht"
-    include_context "cpuinfo_16core_w_ht"
+    include_context "sysfs_8core_w_ht"
+    include_context "cpuinfo_8core_w_ht"
     let(:hctl) { Hyperctl::Sysfs.new }
 
     context 'fakefs sanity checks' do
