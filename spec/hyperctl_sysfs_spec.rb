@@ -24,17 +24,17 @@ describe Hyperctl::Sysfs do
 
     describe '#disable_core' do
       it 'disbles core_id 15' do
-        hctl.disable_core(15)
+        Hyperctl::Sysfs.disable_core(15)
         hctl.refresh
 
         expect(sysfs('cpu15', 'online')).to contain(/^0$/)
       end
     end
 
-    describe '#enable_core' do
+    context '#enable_core' do
       # note that this context is highly coupled with the #disable_core context
       it 'enables core_id 15' do
-        hctl.enable_core(15)
+        Hyperctl::Sysfs.enable_core(15)
         hctl.refresh
 
         expect(sysfs('cpu15', 'online')).to contain(/^1$/)
