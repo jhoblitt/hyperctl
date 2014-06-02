@@ -19,7 +19,7 @@ RSpec::Matchers.define :contain do |content|
   end
 end
 
-RSpec.shared_context 'sysfs_16core' do
+RSpec.shared_context 'sysfs_16core_w_ht' do
   0.upto(15).each do |core_id|
     next if core_id == 0
     mksysfs("cpu#{core_id}", 'online', "1\n")
@@ -32,7 +32,7 @@ RSpec.shared_context 'sysfs_16core' do
   end
 end
 
-RSpec.shared_context 'cpuinfo_16core' do
+RSpec.shared_context 'cpuinfo_16core_w_ht' do
   info = {}
   0.upto(7).each do |core_id|
     name = "cpu#{core_id}"
