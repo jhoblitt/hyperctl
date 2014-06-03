@@ -6,3 +6,4 @@ Gemfile.lock
 *.patch
 tmp/aruba/
 .ruby-version
+*.swp
