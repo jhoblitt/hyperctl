@@ -1,6 +1,21 @@
 require 'hyperctl/sysfs'
 
 module Hyperctl
+  def self.enable(cpu_info)
+    # as far as I can tell, there's no way to discover the topology information
+    # for which cores and siblings if either of them is disabled.  So we are
+    # just trying to enable everything that is disabled...
+    enable_core = []
+    cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
+      core_id = cpu_info[k][:core_id]
+      if cpu_info[k][:online] == false
+        enable_core << core_id
+      end
+    end
+
+    enable_core.each {|core_id| Hyperctl::Sysfs.enable_core(core_id) }
+  end
+
   def self.disable(cpu_info)
     checked_core = []
     disable_core = []

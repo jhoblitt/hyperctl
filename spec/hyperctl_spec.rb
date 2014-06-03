@@ -62,7 +62,7 @@ EOS
     context '8 physical cores with HT enabled' do
       include_context "cpuinfo_8core_w_ht"
 
-      it do
+      it 'should turn cores off' do
         8.upto(15).each do |core_id|
           expect(Hyperctl::Sysfs).to receive(:disable_core).with(core_id).once
         end
@@ -80,4 +80,27 @@ EOS
       end
     end # 12 physical cores with HT disabled
   end #disable
+
+  describe '#enable' do
+    context '8 physical cores with HT enabled' do
+      include_context "cpuinfo_8core_w_ht"
+
+      it 'should do nothing' do
+        # all SMT cores are already enabled
+        expect(Hyperctl::Sysfs).not_to receive(:enable_core)
+        Hyperctl.enable(info)
+      end
+    end # 8 physical cores with HT enabled
+
+    context '12 physical cores with HT disabled' do
+      include_context "cpuinfo_12core_wo_ht"
+
+      it 'should turn cores on' do
+        12.upto(23).each do |core_id|
+          expect(Hyperctl::Sysfs).to receive(:enable_core).with(core_id).once
+        end
+        Hyperctl.enable(info)
+      end
+    end # 12 physical cores with HT disabled
+  end #enable
 end
