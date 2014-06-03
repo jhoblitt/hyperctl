@@ -26,7 +26,7 @@ module Hyperctl
       if cpu.has_key?(:thread_siblings_list)
         (cpu[:thread_siblings_list] - checked_core).each do |core_id|
           # check to see if the core is already disabled
-          if cpu_info["cpu#{core_id}".to_sym][:online] == true
+          if cpu_info[k][:online] == true
             disable_core << core_id
           end
         end
