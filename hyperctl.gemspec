@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.license     = 'Apache 2.0'
 
   s.required_ruby_version = '>= 1.8.7'
+  s.add_runtime_dependency("docopt", ">= 0.5.0")
   s.add_development_dependency('rspec', '>= 2.0.0')
   s.add_development_dependency('rspec-expectations', '>= 2.0.0')
   s.add_development_dependency('rspec-mocks', '>= 2.0.0')

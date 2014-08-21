@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+
+require 'hyperctl'
+require "docopt"
+
+doc = <<DOCOPT
+#{__FILE__}
+
+Usage:
+  #{__FILE__}
+  #{__FILE__} (--enable | --disable)
+  #{__FILE__} -h | --help
+  #{__FILE__} --version
+  #{__FILE__} --quiet
+
+Options:
+  --enable      Enable hyperthreading.
+  --disable     Diable hyperthreading.
+  --quiet       Suppress stdout.
+  --version     Show version.
+  -h --help     Show this screen.
+
+DOCOPT
+
+
+options = {}
+begin
+  options = Docopt::docopt(doc)
+rescue Docopt::Exit => e
+  puts e.message
+  exit 1
+end
+
+if options['--version']
+  puts Hyperctl::VERSION
+  exit 0
+end
+
+hctl = Hyperctl::Sysfs.new
+
+begin
+  if options['--enable']
+    Hyperctl.enable(hctl.cpu_info)
+    hctl.refresh
+  end
+
+  if options['--disable']
+    Hyperctl.disable(hctl.cpu_info)
+    hctl.refresh
+  end
+
+  unless options['--quiet']
+    text = Hyperctl.status(hctl.cpu_info)
+    puts text
+  end
+rescue Errno::EACCES => e
+  puts e.message
+  exit 1
+end
+
+exit 0
