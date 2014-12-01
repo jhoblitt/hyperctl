@@ -1,9 +1,9 @@
-pkg/
-spec/fixtures/
+.bundle
 Gemfile.lock
 *.orig
-*.rej
 *.patch
-tmp/aruba/
+*.rej
 .ruby-version
 *.swp
+tmp/aruba/
+.vagrant
