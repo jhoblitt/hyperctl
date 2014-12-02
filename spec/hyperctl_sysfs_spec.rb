@@ -32,6 +32,14 @@ describe Hyperctl::Sysfs do
       end
     end
 
+    context '#cores' do
+      it 'lists all cores' do
+        cores = hctl.cores
+
+        expect(cores).to eq (0 .. 15).to_a
+      end
+    end
+
     context '#online_cores' do
       it 'lists all enabled cores' do
         cores = hctl.online_cores
@@ -84,6 +92,14 @@ describe Hyperctl::Sysfs do
         Hyperctl::Sysfs.disable_core(15)
 
         expect(sysfs('cpu15', 'online')).to contain(/^0$/)
+      end
+    end
+
+    context '#cores' do
+      it 'lists all cores' do
+        cores = hctl.cores
+
+        expect(cores).to eq (0 .. 23).to_a
       end
     end
 

@@ -64,6 +64,15 @@ class Hyperctl::Sysfs
     @cpu_info = info
   end
 
+  def cores
+    cores = []
+    cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
+      cores << cpu_info[k][:core_id]
+    end
+
+    return cores
+  end
+
   def online_cores
     cores = []
     cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
