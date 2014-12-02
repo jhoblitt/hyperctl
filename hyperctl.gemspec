@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec-expectations', '>= 2.0.0')
   s.add_development_dependency('rspec-mocks', '>= 2.0.0')
   s.add_development_dependency('rake', '>= 10.0.0')
-  s.add_development_dependency('aruba', '~> 0.4.6')
   s.add_development_dependency('fakefs', '~> 0.5.2')
   s.add_development_dependency('mocha', '~> 1.0')
   s.add_development_dependency('yard', '~> 0.8')
