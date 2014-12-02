@@ -35,7 +35,6 @@ describe Hyperctl::Sysfs do
     context '#online_cores' do
       it 'lists all enabled cores' do
         cores = hctl.online_cores
-        hctl.refresh
 
         expect(cores).to eq (0 .. 15).to_a
       end
@@ -91,7 +90,6 @@ describe Hyperctl::Sysfs do
     context '#online_cores' do
       it 'lists all enabled cores' do
         cores = hctl.online_cores
-        hctl.refresh
 
         expect(cores).to eq (0 .. 11).to_a
       end
