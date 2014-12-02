@@ -5,13 +5,19 @@ Ruby hyperctl Gem
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Install](#install)
-3. [Usage](#usage)
-4. [Versioning](#versioning)
-5. [Support](#support)
-6. [Contributing](#contributing)
-7. [See Also](#see-also)
+1. [Summary](#summary)
+2. [Description](#description)
+3. [Install](#install)
+4. [Usage](#usage)
+5. [Versioning](#versioning)
+6. [Support](#support)
+7. [Contributing](#contributing)
+8. [See Also](#see-also)
+
+Summary
+-------
+
+A utility for enabling/disabling hyperthreading
 
 
 Description
@@ -22,7 +28,7 @@ status of and [with appropriate permissions] enable/disable
 hyperthreading/SMT/sibling cores on Linux via the
 [`sysfs`](https://www.kernel.org/doc/Documentation/filesystems/sysfs.txt)
 pseudo filesystem.  It should be compatible with most modern Linux
-distributions as long as `sysfs` is mounted as `/sysfs`.
+distributions as long as `sysfs` is mounted at `/sysfs`.
 
 
 Install

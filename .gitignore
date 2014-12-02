@@ -1,5 +1,6 @@
 .bundle
 doc/
+*.gem
 Gemfile.lock
 *.orig
 *.patch
