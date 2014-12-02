@@ -1,4 +1,5 @@
 .bundle
+doc/
 Gemfile.lock
 *.orig
 *.patch
@@ -7,3 +8,4 @@ Gemfile.lock
 *.swp
 tmp/aruba/
 .vagrant
+.yardoc

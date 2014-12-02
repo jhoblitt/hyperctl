@@ -1,6 +1,10 @@
 require 'hyperctl/sysfs'
 
 module Hyperctl
+  # Enable all sibling cores
+  #
+  # @param hctl [Hyperctl::Sysfs] object
+  # @api public
   def self.enable(hctl)
     # as far as I can tell, there's no way to discover the topology information
     # for which cores and siblings if either of them is disabled.  So we are
@@ -9,11 +13,20 @@ module Hyperctl
     cores.each {|core_id| Hyperctl::Sysfs.enable_core(core_id) }
   end
 
+  # Disable all sibling cores
+  #
+  # @param hctl [Hyperctl::Sysfs] object
+  # @api public
   def self.disable(hctl)
     cores = hctl.sibling_cores
     cores.each {|core_id| Hyperctl::Sysfs.disable_core(core_id) }
   end
 
+  # Generate a pretty formatted string of sibling core status
+  #
+  # @param hctl [Hyperctl::Sysfs] object
+  # @return [String] the generated string
+  # @api public
   def self.status(hctl)
     cpu_info = hctl.cpu_info
     text = ""

@@ -1,10 +1,15 @@
 class Hyperctl::Sysfs
   attr_accessor :cpu_info
 
+  # @api private
   def initialize
     @cpu_info = refresh
   end
 
+  # Refresh the `cpu_info` [Hash] of the current CPU states
+  #
+  # @return [Hash] of cpu status
+  # @api public
   def refresh
     info = {}
 
@@ -64,6 +69,10 @@ class Hyperctl::Sysfs
     @cpu_info = info
   end
 
+  # List of all CPUs in system by numeric core id
+  #
+  # @return [Array<Integer>] of core ids
+  # @api public
   def cores
     cores = []
     cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
@@ -73,6 +82,10 @@ class Hyperctl::Sysfs
     return cores
   end
 
+  # List of online CPUs in system by numeric core id
+  #
+  # @return [Array<Integer>] of core ids
+  # @api public
   def online_cores
     cores = []
     cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
@@ -85,6 +98,10 @@ class Hyperctl::Sysfs
     return cores
   end
 
+  # List of offline CPUs in system by numeric core id
+  #
+  # @return [Array<Integer>] of core ids
+  # @api public
   def offline_cores
     cores = []
     cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
@@ -97,6 +114,10 @@ class Hyperctl::Sysfs
     return cores
   end
 
+  # List of sibling (aka hyperthread/SMT) CPUs in system by numeric core id
+  #
+  # @return [Array<Integer>] of core ids
+  # @api public
   def sibling_cores
     cores = []
     checked_cores = []
@@ -119,18 +140,34 @@ class Hyperctl::Sysfs
     return cores
   end
 
+  # Are all phyical/hyperthread/SMT/sibling cores enabled?
+  #
+  # @return [Bool] of status
+  # @api public
   def all_cores_enabled?
     cores.count == online_cores.count
   end
 
+  # Are all hyperthread/SMT/sibling cores Disabled?
+  #
+  # @return [Bool] of status
+  # @api public
   def all_siblings_disabled?
     sibling_cores.empty?
   end
 
+  # Enable a CPU by numeric core id
+  #
+  # @param core_id [Integer]
+  # @api public
   def self.enable_core(core_id)
     set_core(core_id, '1')
   end
 
+  # Disable a CPU by numeric core id
+  #
+  # @param core_id [Integer]
+  # @api public
   def self.disable_core(core_id)
     set_core(core_id, '0')
   end
