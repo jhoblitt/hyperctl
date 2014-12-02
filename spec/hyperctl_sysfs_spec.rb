@@ -34,33 +34,25 @@ describe Hyperctl::Sysfs do
 
     context '#cores' do
       it 'lists all cores' do
-        cores = hctl.cores
-
-        expect(cores).to eq((0 .. 15).to_a)
+        expect(hctl.cores).to eq((0 .. 15).to_a)
       end
     end
 
     context '#online_cores' do
       it 'lists all enabled cores' do
-        cores = hctl.online_cores
-
-        expect(cores).to eq((0 .. 15).to_a)
+        expect(hctl.online_cores).to eq((0 .. 15).to_a)
       end
     end
 
     context '#offline_cores' do
       it 'lists all disabled cores' do
-        cores = hctl.offline_cores
-
-        expect(cores).to eq []
+        expect(hctl.offline_cores).to eq []
       end
     end
 
     context '#sibling_cores' do
       it 'lists all smt cores' do
-        cores = hctl.sibling_cores
-
-        expect(cores).to eq((8 .. 15).to_a)
+        expect(hctl.sibling_cores).to eq((8 .. 15).to_a)
       end
     end
 
@@ -117,33 +109,25 @@ describe Hyperctl::Sysfs do
 
     context '#cores' do
       it 'lists all cores' do
-        cores = hctl.cores
-
-        expect(cores).to eq((0 .. 23).to_a)
+        expect(hctl.cores).to eq((0 .. 23).to_a)
       end
     end
 
     context '#online_cores' do
       it 'lists all enabled cores' do
-        cores = hctl.online_cores
-
-        expect(cores).to eq((0 .. 11).to_a)
+        expect(hctl.online_cores).to eq((0 .. 11).to_a)
       end
     end
 
     context '#offline_cores' do
       it 'lists all disabled cores' do
-        cores = hctl.offline_cores
-
-        expect(cores).to eq((12 .. 23).to_a)
+        expect(hctl.offline_cores).to eq((12 .. 23).to_a)
       end
     end
 
     context '#sibling_cores' do
       it 'lists all smt cores' do
-        cores = hctl.sibling_cores
-
-        expect(cores).to eq []
+        expect(hctl.sibling_cores).to eq []
       end
     end
 
