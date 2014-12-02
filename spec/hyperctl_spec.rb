@@ -23,7 +23,11 @@ cpu13: enabled  - hypertheading: enabled
 cpu14: enabled  - hypertheading: enabled
 cpu15: enabled  - hypertheading: enabled
 EOS
-      it { expect(Hyperctl.status(info)).to eq(text) }
+      it do
+        hctl = Hyperctl::Sysfs.new
+        hctl.stubs(:cpu_info).returns(info)
+        expect(Hyperctl.status(hctl)).to eq(text)
+      end
     end # 8 physical cores with HT enabled
 
     context '12 physical cores with HT disabled' do
@@ -54,7 +58,12 @@ cpu21: disabled - hypertheading: disabled
 cpu22: disabled - hypertheading: disabled
 cpu23: disabled - hypertheading: disabled
 EOS
-      it { expect(Hyperctl.status(info)).to eq(text) }
+      it do
+        hctl = Hyperctl::Sysfs.new
+        hctl.stubs(:cpu_info).returns(info)
+
+        expect(Hyperctl.status(hctl)).to eq(text)
+      end
     end # 12 physical cores with HT disabled
   end #status
 
@@ -63,10 +72,13 @@ EOS
       include_context "cpuinfo_8core_w_ht"
 
       it 'should turn cores off' do
+        hctl = Hyperctl::Sysfs.new
+        hctl.stubs(:cpu_info).returns(info)
         8.upto(15).each do |core_id|
           Hyperctl::Sysfs.expects(:disable_core).with(core_id).once
         end
-        Hyperctl.disable(info)
+
+        Hyperctl.disable(hctl)
       end
     end # 8 physical cores with HT enabled
 
@@ -75,8 +87,11 @@ EOS
 
       it 'should do nothing' do
         # all SMT cores are already disabled
+        hctl = Hyperctl::Sysfs.new
+        hctl.stubs(:cpu_info).returns(info)
         Hyperctl::Sysfs.expects(:disable_core).never
-        Hyperctl.disable(info)
+
+        Hyperctl.disable(hctl)
       end
     end # 12 physical cores with HT disabled
   end #disable
@@ -87,8 +102,11 @@ EOS
 
       it 'should do nothing' do
         # all SMT cores are already enabled
+        hctl = Hyperctl::Sysfs.new
+        hctl.stubs(:cpu_info).returns(info)
         Hyperctl::Sysfs.expects(:enable_core).never
-        Hyperctl.enable(info)
+
+        Hyperctl.enable(hctl)
       end
     end # 8 physical cores with HT enabled
 
@@ -96,10 +114,13 @@ EOS
       include_context "cpuinfo_12core_wo_ht"
 
       it 'should turn cores on' do
+        hctl = Hyperctl::Sysfs.new
+        hctl.stubs(:cpu_info).returns(info)
         12.upto(23).each do |core_id|
           Hyperctl::Sysfs.expects(:enable_core).with(core_id).once
         end
-        Hyperctl.enable(info)
+
+        Hyperctl.enable(hctl)
       end
     end # 12 physical cores with HT disabled
   end #enable

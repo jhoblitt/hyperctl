@@ -40,17 +40,17 @@ hctl = Hyperctl::Sysfs.new
 
 begin
   if options['--enable']
-    Hyperctl.enable(hctl.cpu_info)
+    Hyperctl.enable(hctl)
     hctl.refresh
   end
 
   if options['--disable']
-    Hyperctl.disable(hctl.cpu_info)
+    Hyperctl.disable(hctl)
     hctl.refresh
   end
 
   unless options['--quiet']
-    text = Hyperctl.status(hctl.cpu_info)
+    text = Hyperctl.status(hctl)
     puts text
   end
 rescue Errno::EACCES => e
