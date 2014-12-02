@@ -8,14 +8,15 @@ doc = <<DOCOPT
 
 Usage:
   #{__FILE__}
-  #{__FILE__} (--enable | --disable)
+  #{__FILE__} (--enable | --disable) [--quiet]
+  #{__FILE__} --status (--enable | --disable) [--quiet]
   #{__FILE__} -h | --help
   #{__FILE__} --version
-  #{__FILE__} --quiet
 
 Options:
   --enable      Enable hyperthreading.
   --disable     Diable hyperthreading.
+  --status      Report hyperthreading state.
   --quiet       Suppress stdout.
   --version     Show version.
   -h --help     Show this screen.
@@ -23,33 +24,31 @@ Options:
 DOCOPT
 
 
-options = {}
+@options = {}
 begin
-  options = Docopt::docopt(doc)
+  @options = Docopt::docopt(doc)
 rescue Docopt::Exit => e
   puts e.message
   exit 1
 end
 
-if options['--version']
+if @options['--version']
   puts Hyperctl::VERSION
   exit 0
 end
 
 hctl = Hyperctl::Sysfs.new
 
+exit_code = 0
+
 begin
-  if options['--enable']
-    Hyperctl.enable(hctl)
-    hctl.refresh
+  if @options['--status']
+    exit_code = check_status(hctl)
+  elsif @options['--enable'] || @options['--disable']
+    exit_code = change_state(hctl)
   end
 
-  if options['--disable']
-    Hyperctl.disable(hctl)
-    hctl.refresh
-  end
-
-  unless options['--quiet']
+  unless @options['--quiet']
     text = Hyperctl.status(hctl)
     puts text
   end
@@ -58,4 +57,34 @@ rescue Errno::EACCES => e
   exit 1
 end
 
-exit 0
+exit exit_code
+
+BEGIN {
+  def change_state(hctl)
+    if @options['--enable']
+      Hyperctl.enable(hctl)
+      hctl.refresh
+      return check_status(hctl)
+    end
+
+    if @options['--disable']
+      Hyperctl.disable(hctl)
+      hctl.refresh
+      return check_status(hctl)
+    end
+
+    raise
+  end
+
+  def check_status(hctl)
+    if @options['--enable']
+      return hctl.all_cores_enabled? ? 0 : 3
+    end
+
+    if @options['--disable']
+      return hctl.all_siblings_disabled? ? 0 : 3
+    end
+
+    raise
+  end
+}
