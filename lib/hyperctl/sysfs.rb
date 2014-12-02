@@ -97,6 +97,28 @@ class Hyperctl::Sysfs
     return cores
   end
 
+  def sibling_cores
+    cores = []
+    checked_cores = []
+    cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
+      cpu = cpu_info[k]
+      checked_cores << cpu[:core_id]
+
+      if cpu.has_key?(:thread_siblings_list)
+        (cpu[:thread_siblings_list] - checked_cores).each do |core_id|
+          # check to see if the core is already disabled
+          # XXX this probably isn't nessicary as a disabled core appears to #
+          # never be listed as a sibiling
+          if cpu_info[k][:online] == true
+            cores << core_id
+          end
+        end
+      end
+    end
+
+    return cores
+  end
+
   def all_cores_enabled?
     cores.count == online_cores.count
   end

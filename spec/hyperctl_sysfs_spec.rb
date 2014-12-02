@@ -56,6 +56,14 @@ describe Hyperctl::Sysfs do
       end
     end
 
+    context '#sibling_cores' do
+      it 'lists all smt cores' do
+        cores = hctl.sibling_cores
+
+        expect(cores).to eq (8 .. 15).to_a
+      end
+    end
+
     context '#all_cores_enabled?' do
       it 'returns true' do
         expect(hctl.all_cores_enabled?).to eq true
@@ -122,6 +130,14 @@ describe Hyperctl::Sysfs do
         cores = hctl.offline_cores
 
         expect(cores).to eq (12 .. 23).to_a
+      end
+    end
+
+    context '#sibling_cores' do
+      it 'lists all smt cores' do
+        cores = hctl.sibling_cores
+
+        expect(cores).to eq []
       end
     end
 
