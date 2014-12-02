@@ -1,4 +1,5 @@
 require 'hyperctl/sysfs'
+require 'hyperctl/version'
 
 module Hyperctl
   # Enable all sibling cores
