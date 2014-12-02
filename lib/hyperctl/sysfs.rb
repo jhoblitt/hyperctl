@@ -64,16 +64,28 @@ class Hyperctl::Sysfs
     @cpu_info = info
   end
 
-  def offline_cores
-    offline_core = []
+  def online_cores
+    cores = []
     cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
       core_id = cpu_info[k][:core_id]
-      if cpu_info[k][:online] == false
-        offline_core << core_id
+      if cpu_info[k][:online] == true
+        cores << core_id
       end
     end
 
-    return offline_core
+    return cores
+  end
+
+  def offline_cores
+    cores = []
+    cpu_info.each_key.sort_by {|k| cpu_info[k][:core_id] }.each do |k|
+      core_id = cpu_info[k][:core_id]
+      if cpu_info[k][:online] == false
+        cores << core_id
+      end
+    end
+
+    return cores
   end
 
   def self.enable_core(core_id)

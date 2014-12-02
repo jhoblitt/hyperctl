@@ -32,11 +32,20 @@ describe Hyperctl::Sysfs do
       end
     end
 
+    context '#online_cores' do
+      it 'lists all enabled cores' do
+        cores = hctl.online_cores
+        hctl.refresh
+
+        expect(cores).to eq (0 .. 15).to_a
+      end
+    end
+
     context '#offline_cores' do
       it 'lists all disabled cores' do
-        offline = hctl.offline_cores
+        cores = hctl.offline_cores
 
-        expect(offline).to eq []
+        expect(cores).to eq []
       end
     end
 
@@ -79,11 +88,20 @@ describe Hyperctl::Sysfs do
       end
     end
 
+    context '#online_cores' do
+      it 'lists all enabled cores' do
+        cores = hctl.online_cores
+        hctl.refresh
+
+        expect(cores).to eq (0 .. 11).to_a
+      end
+    end
+
     context '#offline_cores' do
       it 'lists all disabled cores' do
-        offline = hctl.offline_cores
+        cores = hctl.offline_cores
 
-        expect(offline).to eq (12 .. 23).to_a
+        expect(cores).to eq (12 .. 23).to_a
       end
     end
 
