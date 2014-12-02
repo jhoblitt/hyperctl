@@ -123,6 +123,10 @@ class Hyperctl::Sysfs
     cores.count == online_cores.count
   end
 
+  def all_siblings_disabled?
+    sibling_cores.empty?
+  end
+
   def self.enable_core(core_id)
     set_core(core_id, '1')
   end

@@ -66,7 +66,13 @@ describe Hyperctl::Sysfs do
 
     context '#all_cores_enabled?' do
       it 'returns true' do
-        expect(hctl.all_cores_enabled?).to eq true
+        expect(hctl.all_cores_enabled?).to be true
+      end
+    end
+
+    context '#all_siblings_disabled?' do
+      it 'returns false' do
+        expect(hctl.all_siblings_disabled?).to be false
       end
     end
 
@@ -143,7 +149,13 @@ describe Hyperctl::Sysfs do
 
     context '#all_cores_enabled?' do
       it 'returns false' do
-        expect(hctl.all_cores_enabled?).to eq false
+        expect(hctl.all_cores_enabled?).to be false
+      end
+    end
+
+    context '#all_siblings_disabled?' do
+      it 'returns true' do
+        expect(hctl.all_siblings_disabled?).to be true
       end
     end
 
