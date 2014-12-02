@@ -56,6 +56,12 @@ describe Hyperctl::Sysfs do
       end
     end
 
+    context '#all_cores_enabled?' do
+      it 'returns true' do
+        expect(hctl.all_cores_enabled?).to eq true
+      end
+    end
+
     context '#enable_core' do
       it 'enables core_id 15' do
         Hyperctl::Sysfs.enable_core(15)
@@ -116,6 +122,12 @@ describe Hyperctl::Sysfs do
         cores = hctl.offline_cores
 
         expect(cores).to eq (12 .. 23).to_a
+      end
+    end
+
+    context '#all_cores_enabled?' do
+      it 'returns false' do
+        expect(hctl.all_cores_enabled?).to eq false
       end
     end
 

@@ -97,6 +97,10 @@ class Hyperctl::Sysfs
     return cores
   end
 
+  def all_cores_enabled?
+    cores.count == online_cores.count
+  end
+
   def self.enable_core(core_id)
     set_core(core_id, '1')
   end
