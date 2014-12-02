@@ -1,5 +1,9 @@
 require 'hyperctl'
 
+RSpec.configure do |config|
+  config.mock_framework = :mocha
+end
+
 def sysfs(cpu_name, attr)
   File.join('/sys/devices/system/cpu/', cpu_name, attr)
 end

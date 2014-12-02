@@ -64,7 +64,7 @@ EOS
 
       it 'should turn cores off' do
         8.upto(15).each do |core_id|
-          expect(Hyperctl::Sysfs).to receive(:disable_core).with(core_id).once
+          Hyperctl::Sysfs.expects(:disable_core).with(core_id).once
         end
         Hyperctl.disable(info)
       end
@@ -75,7 +75,7 @@ EOS
 
       it 'should do nothing' do
         # all SMT cores are already disabled
-        expect(Hyperctl::Sysfs).not_to receive(:disable_core)
+        Hyperctl::Sysfs.expects(:disable_core).never
         Hyperctl.disable(info)
       end
     end # 12 physical cores with HT disabled
@@ -87,7 +87,7 @@ EOS
 
       it 'should do nothing' do
         # all SMT cores are already enabled
-        expect(Hyperctl::Sysfs).not_to receive(:enable_core)
+        Hyperctl::Sysfs.expects(:enable_core).never
         Hyperctl.enable(info)
       end
     end # 8 physical cores with HT enabled
@@ -97,7 +97,7 @@ EOS
 
       it 'should turn cores on' do
         12.upto(23).each do |core_id|
-          expect(Hyperctl::Sysfs).to receive(:enable_core).with(core_id).once
+          Hyperctl::Sysfs.expects(:enable_core).with(core_id).once
         end
         Hyperctl.enable(info)
       end

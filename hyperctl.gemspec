@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rake', '>= 10.0.0')
   s.add_development_dependency('aruba', '~> 0.4.6')
   s.add_development_dependency('fakefs', '~> 0.5.2')
+  s.add_development_dependency('mocha')
 
   s.rubygems_version = '>= 1.6.1'
   s.files            = `git ls-files`.split("\n")
