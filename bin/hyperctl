@@ -54,7 +54,7 @@ begin
   end
 rescue Errno::EACCES => e
   puts e.message
-  exit 1
+  exit 2
 end
 
 exit exit_code
